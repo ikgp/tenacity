@@ -266,10 +266,14 @@ EffectEqualization::EffectEqualization(int Options)
    mInterp = DEF_InterpMeth;
    mCurveName = DEF_CurveName;
 
-   GetPrivateConfig(GetCurrentSettingsGroup(), wxT("dBMin"), mdBMin, DEF_dBMin);
-   GetPrivateConfig(GetCurrentSettingsGroup(), wxT("dBMax"), mdBMax, DEF_dBMax);
-   GetPrivateConfig(GetCurrentSettingsGroup(), wxT("DrawMode"), mDrawMode, DEF_DrawMode);
-   GetPrivateConfig(GetCurrentSettingsGroup(), wxT("DrawGrid"), mDrawGrid, DEF_DrawGrid);
+   GetConfig(PluginSettings::Private, GetCurrentSettingsGroup(),
+      wxT("dBMin"), mdBMin, DEF_dBMin);
+   GetConfig(PluginSettings::Private, GetCurrentSettingsGroup(),
+      wxT("dBMax"), mdBMax, DEF_dBMax);
+   GetConfig(PluginSettings::Private, GetCurrentSettingsGroup(),
+      wxT("DrawMode"), mDrawMode, DEF_DrawMode);
+   GetConfig(PluginSettings::Private, GetCurrentSettingsGroup(),
+      wxT("DrawGrid"), mDrawGrid, DEF_DrawGrid);
 
    mLogEnvelope = std::make_unique<Envelope>
       (false,
@@ -579,10 +583,14 @@ bool EffectEqualization::ValidateUI()
    }
    SaveCurves();
 
-   SetPrivateConfig(GetCurrentSettingsGroup(), wxT("dBMin"), mdBMin);
-   SetPrivateConfig(GetCurrentSettingsGroup(), wxT("dBMax"), mdBMax);
-   SetPrivateConfig(GetCurrentSettingsGroup(), wxT("DrawMode"), mDrawMode);
-   SetPrivateConfig(GetCurrentSettingsGroup(), wxT("DrawGrid"), mDrawGrid);
+   SetConfig(PluginSettings::Private, GetCurrentSettingsGroup(),
+      wxT("dBMin"), mdBMin);
+   SetConfig(PluginSettings::Private, GetCurrentSettingsGroup(),
+      wxT("dBMax"), mdBMax);
+   SetConfig(PluginSettings::Private, GetCurrentSettingsGroup(),
+      wxT("DrawMode"), mDrawMode);
+   SetConfig(PluginSettings::Private, GetCurrentSettingsGroup(),
+      wxT("DrawGrid"), mDrawGrid);
 
    return true;
 }
@@ -635,7 +643,8 @@ bool EffectEqualization::Startup()
          dBMin = -30;  //default
       }
       mdBMin = dBMin;
-      SetPrivateConfig(GetCurrentSettingsGroup(), wxT("dBMin"), mdBMin);
+      SetConfig(PluginSettings::Private, GetCurrentSettingsGroup(),
+         wxT("dBMin"), mdBMin);
 
       double dBMax;
       gPrefs->Read(base + wxT("dBMax"), &dBMax, 30.);
@@ -643,13 +652,16 @@ bool EffectEqualization::Startup()
          dBMax = 30;  //default
       }
       mdBMax = dBMax;
-      SetPrivateConfig(GetCurrentSettingsGroup(), wxT("dBMax"), mdBMax);
+      SetConfig(PluginSettings::Private, GetCurrentSettingsGroup(),
+         wxT("dBMax"), mdBMax);
 
       gPrefs->Read(base + wxT("DrawMode"), &mDrawMode, true);
-      SetPrivateConfig(GetCurrentSettingsGroup(), wxT("DrawMode"), mDrawMode);
+      SetConfig(PluginSettings::Private, GetCurrentSettingsGroup(),
+         wxT("DrawMode"), mDrawMode);
 
       gPrefs->Read(base + wxT("DrawGrid"), &mDrawGrid, true);
-      SetPrivateConfig(GetCurrentSettingsGroup(), wxT("DrawGrid"), mDrawGrid);
+      SetConfig(PluginSettings::Private, GetCurrentSettingsGroup(),
+         wxT("DrawGrid"), mDrawGrid);
 
       // Do not migrate again
       gPrefs->Write(base + wxT("Migrated"), true);
