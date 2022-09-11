@@ -532,7 +532,8 @@ static struct DefaultConfigEntry {
 } DefaultConfigTable [] = {
    // Top dock row, may wrap
    { TransportBarID,         NoBarID,                NoBarID                },
-   { ToolsBarID,             TransportBarID,         NoBarID                },
+   { TimeBarID,              TransportBarID,         NoBarID                },
+   { ToolsBarID,             TimeBarID,              NoBarID                },
    { RecordMeterBarID,       ToolsBarID,             NoBarID                },
    { PlayMeterBarID,         RecordMeterBarID,       NoBarID                },
    { EditBarID,              PlayMeterBarID,         NoBarID                },
@@ -553,7 +554,6 @@ static struct DefaultConfigEntry {
 
    // Bottom dock
    { SelectionBarID,         NoBarID,                NoBarID                },
-   { TimeBarID,              SelectionBarID,         NoBarID                },
 
    // Hidden by default in bottom dock
    { SpectralSelectionBarID, NoBarID,                NoBarID                },
@@ -604,7 +604,6 @@ void ToolManager::Reset()
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING
          || ndx == SpectralSelectionBarID
 #endif
-         || ndx == TimeBarID
          )
          dock = mBotDock;
       else
@@ -775,8 +774,6 @@ void ToolManager::ReadConfig()
          bShownByDefault = false;
       if( ndx == ScrubbingBarID )
          bShownByDefault = false;
-      if( ndx == TimeBarID )
-         defaultDock = BotDockID;
 
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING
       if( ndx == SpectralSelectionBarID ){
