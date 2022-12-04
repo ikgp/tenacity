@@ -5,6 +5,7 @@
   "sdk": "org.freedesktop.Sdk",
   "command": "tenacity",
   "rename-icon": "tenacity",
+  "rename-desktop-file": "tenacity.desktop",
   "finish-args": [
     "--share=ipc",
     "--socket=fallback-x11",
@@ -220,7 +221,6 @@
         "-DWX_CONFIG=/app/bin/wx-config"
       ],
       "post-install": [
-        "install -Dm644 ../help/org.tenacityaudio.Tenacity.metainfo.xml -t /app/share/metainfo",
         "install -d /app/extensions/Plugins"
       ],
       "cleanup": [
@@ -233,16 +233,6 @@
           "type": "git",
           "url": "https://codeberg.org/tenacityteam/tenacity.git",
           "commit": "d6ac3ae1793b55e3e3747b76b5823419bc529dcd"
-        },
-        {
-          "type": "patch",
-          "path": "patches/audacity-suil-fix.patch"
-        },
-        {
-          "type": "shell",
-          "commands": [
-            "sed -e '43i <release version=\"master\" date=\"2021-09-05\"/>' -i help/org.tenacityaudio.Tenacity.metainfo.xml"
-          ]
         }
       ]
     }
