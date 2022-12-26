@@ -200,15 +200,8 @@ void SelectionBar::Populate()
    // Top row (mostly labels)
    wxColour clrText =  theTheme.Colour( clrTrackPanelText );
    wxColour clrText2 = *wxBLUE;
-   AuStaticText *rateLabel = AddTitle( XO("Project Rate (Hz)"), mainSizer );
-   AddVLine( mainSizer );
-   AuStaticText *snapLabel = AddTitle( XO("Snap-To"), mainSizer );
-   AddVLine( mainSizer );
-#ifdef TIME_IN_SELECT_TOOLBAR
-   AddTitle( XO("Audio Position"), mainSizer );
-   AddVLine( mainSizer );
-#endif
 
+   // Project selection
    {
       const wxString choices[4] = {
          _("Start and End of Selection"),
@@ -227,7 +220,27 @@ void SelectionBar::Populate()
       mainSizer->Add(mChoice, 0, wxEXPAND | wxALIGN_TOP | wxRIGHT, 6);
    }
 
+   AuStaticText *rateLabel = AddTitle( XO("Project Rate (Hz)"), mainSizer );
+   AddVLine( mainSizer );
+   AuStaticText *snapLabel = AddTitle( XO("Snapping:"), mainSizer );
+   AddVLine( mainSizer );
+#ifdef TIME_IN_SELECT_TOOLBAR
+   AddTitle( XO("Audio Position"), mainSizer );
+   AddVLine( mainSizer );
+#endif
+
    // Bottom row, (mostly time controls)
+   // Project selection numerical controls
+   {
+      auto hSizer = std::make_unique<wxBoxSizer>(wxHORIZONTAL);
+
+      mStartTime  = AddTime( XO("Start"), StartTimeID, hSizer.get() );
+      mLengthTime = AddTime( XO("Length"), LengthTimeID, hSizer.get() );
+      mCenterTime = AddTime( XO("Center"), CenterTimeID, hSizer.get() );
+      mEndTime    = AddTime( XO("End"), EndTimeID, hSizer.get() );
+      mainSizer->Add(hSizer.release(), 0, wxALIGN_TOP | wxRIGHT, 0);
+   }
+
    mRateBox = safenew wxComboBox(this, RateID,
                              wxT(""),
                              wxDefaultPosition, wxDefaultSize);
@@ -310,16 +323,6 @@ void SelectionBar::Populate()
    // https://forums.wxwidgets.org/viewtopic.php?t=41120
    AddVLine( mainSizer );
 #endif
-
-   {
-      auto hSizer = std::make_unique<wxBoxSizer>(wxHORIZONTAL);
-
-      mStartTime  = AddTime( XO("Start"), StartTimeID, hSizer.get() );
-      mLengthTime = AddTime( XO("Length"), LengthTimeID, hSizer.get() );
-      mCenterTime = AddTime( XO("Center"), CenterTimeID, hSizer.get() );
-      mEndTime    = AddTime( XO("End"), EndTimeID, hSizer.get() );
-      mainSizer->Add(hSizer.release(), 0, wxALIGN_TOP | wxRIGHT, 0);
-   }
 
 #if defined(__WXGTK3__)
    // Nothing special
