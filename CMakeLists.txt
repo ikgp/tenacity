@@ -721,10 +721,23 @@ else()
     message(STATUS "VST2 plugin host support disabled.")
 endif()
 
-if(NOT CMAKE_SYSTEM_NAME MATCHES "Darwin|Windows")
-    find_package(GLIB REQUIRED)
-    find_package(GTK 3.0 REQUIRED)
+option(WXGTK "Use GTK with wxWidgets." ON)
+option(WXQT "Use Qt with wxWidgets." OFF)
 
+if (WXQT)
+   set(WXGTK OFF)
+   message(WARNING "Plugins (VST2, LV2, etc) are not supported with wxQt.")
+elseif (WXGTK)
+   set(WXQT OFF)
+endif()
+
+if(NOT CMAKE_SYSTEM_NAME MATCHES "Darwin|Windows")
+    if (WXGTK)
+       find_package(GLIB REQUIRED)
+       find_package(GTK 3.0 REQUIRED)
+    elseif(WXQT)
+       find_package(Qt5 REQUIRED Gui)
+    endif()
 endif()
 
 # Handle Audio Units option

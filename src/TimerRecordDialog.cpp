@@ -217,8 +217,10 @@ void TimerRecordDialog::OnDatePicker_Start(wxDateEvent& WXUNUSED(event))
 
    // User might have had the dialog up for a while, or
    // had a future day, set hour of day less than now's, then changed day to today.
-   wxTimerEvent dummyTimerEvent;
-   this->OnTimer(dummyTimerEvent);
+   // FIXME: build fails with wxQt because there is no default constructor.
+   // Also wxTimerEvent should NOT be used in user code like this...
+   //wxTimerEvent dummyTimerEvent;
+   //this->OnTimer(wxTimer());
 
    // Always update End for changed Start, keeping Duration constant.
    // Note that OnTimer sometimes calls UpdateEnd, so sometimes this is redundant,
@@ -532,8 +534,10 @@ int TimerRecordDialog::RunWaitDialog()
 
          // Make sure that start and end time are updated, so we always get the full
          // duration, even if there's some delay getting here.
-         wxTimerEvent dummyTimerEvent;
-         this->OnTimer(dummyTimerEvent);
+         // FIXME: build fails with wxQt because there is no default
+         // constructor. Also wxTimerEvent shouldn't be used in user code.
+         //wxTimerEvent dummyTimerEvent;
+         //this->OnTimer(dummyTimerEvent);
 
          // Loop for progress display during recording.
          while (bIsRecording && (updateResult == ProgressResult::Success)) {
