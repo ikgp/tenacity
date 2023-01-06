@@ -37,6 +37,7 @@ Paul Licameli split from TenacityProject.cpp
 #include <wx/display.h>
 #include <wx/scrolbar.h>
 #include <wx/sizer.h>
+#include <wx/settings.h>
 
 // Returns the screen containing a rectangle, or -1 if none does.
 int ScreenContaining( wxRect & r ){
@@ -662,7 +663,7 @@ ProjectWindow::~ProjectWindow()
 BEGIN_EVENT_TABLE(ProjectWindow, wxFrame)
    EVT_MENU(wxID_ANY, ProjectWindow::OnMenu)
    EVT_MOUSE_EVENTS(ProjectWindow::OnMouseEvent)
-   EVT_CLOSE(ProjectWindow::OnCloseWindow)
+   //EVT_CLOSE(ProjectWindow::OnCloseWindow)
    EVT_SIZE(ProjectWindow::OnSize)
    EVT_SHOW(ProjectWindow::OnShow)
    EVT_ICONIZE(ProjectWindow::OnIconize)
@@ -676,7 +677,41 @@ BEGIN_EVENT_TABLE(ProjectWindow, wxFrame)
    EVT_UPDATE_UI(1, ProjectWindow::OnUpdateUI)
    EVT_COMMAND(wxID_ANY, EVT_TOOLBAR_UPDATED, ProjectWindow::OnToolBarUpdate)
    //mchinen:multithreaded calls - may not be threadsafe with CommandEvent: may have to change.
+
+   EVT_SYS_COLOUR_CHANGED(ProjectWindow::OnSysColourChanged)
 END_EVENT_TABLE()
+
+#include <iostream>
+
+void ProjectWindow::OnSysColourChanged(wxSysColourChangedEvent& event)
+{
+   bool dynamicThemingEnabled = true;
+   gPrefs->Read("/GUI/DynamicTheming", &dynamicThemingEnabled);
+
+   if (!dynamicThemingEnabled)
+   {
+      std::cout << "Dynamic theming disabled" << std::endl;
+      event.Skip();
+      return;
+   }
+
+   auto sysAppearance = wxSystemSettings::GetAppearance();
+
+   std::cout << std::boolalpha << "Is appearance dark? " << sysAppearance.IsDark() << std::endl;
+
+   // Note: system appearance overrides the user's theme preference.
+   if (sysAppearance.IsDark())
+   {
+      GUITheme.Write("dark");
+      theTheme.LoadTheme(themeDark);
+   } else
+   {
+      GUITheme.Write("light");
+      theTheme.LoadTheme(themeLight);
+   }
+
+   ThemePrefs::ApplyUpdatedImages();
+}
 
 void ProjectWindow::ApplyUpdatedTheme()
 {
