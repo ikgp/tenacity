@@ -82,6 +82,8 @@ list( APPEND SOURCES
       AdornedRulerPanel.h
       AudioIO.cpp
       AudioIO.h
+      AudioIoCallback.cpp
+      AudioIoCallback.h
       AudioIOListener.h
       AutoRecoveryDialog.cpp
       AutoRecoveryDialog.h
