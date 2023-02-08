@@ -124,6 +124,8 @@ void OverlayPanel::DrawOverlays(bool repaint_all, wxDC *pDC)
       }
       ++it2;
    }
+
+   Refresh();
 }
 
 void OverlayPanel::Compress()
