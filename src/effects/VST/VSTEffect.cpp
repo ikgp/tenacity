@@ -31,7 +31,7 @@
 
 #include "../../widgets/ProgressDialog.h"
 
-#if USE_VST
+#if USE_VST2
 
 #include <limits.h>
 #include <stdio.h>
@@ -359,7 +359,7 @@ void VSTEffectsModule::Terminate()
 
 EffectFamilySymbol VSTEffectsModule::GetOptionalFamilySymbol()
 {
-#if USE_VST
+#if USE_VST2
    return VSTPLUGINTYPE;
 #else
    return {};
@@ -4005,4 +4005,4 @@ XMLTagHandler *VSTEffect::HandleXMLChild(const wxChar *tag)
    return NULL;
 }
 
-#endif // USE_VST
+#endif // USE_VST2
