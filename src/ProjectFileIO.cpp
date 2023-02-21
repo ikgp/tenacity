@@ -1433,7 +1433,7 @@ void ProjectFileIO::SetProjectTitle(int number)
    // If we are not showing numbers, then <untitled> shows as 'Tenacity'.
    else if (name.empty())
    {
-      name = _TS("Tenacity");
+      name = "Tenacity";
    }
 
    if (mRecovered)
