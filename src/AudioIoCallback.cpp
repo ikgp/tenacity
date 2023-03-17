@@ -33,14 +33,6 @@ double AudioIoCallback::mCachedBestRateOut;
 bool AudioIoCallback::mCachedBestRatePlaying;
 bool AudioIoCallback::mCachedBestRateCapturing;
 
-AudioIoCallback::AudioIoCallback()
-{
-}
-
-AudioIoCallback::~AudioIoCallback()
-{
-}
-
 int AudioIoCallback::AudioCallback(const void *inputBuffer, void *outputBuffer,
                                    unsigned long framesPerBuffer,
                                    const PaStreamCallbackTimeInfo *timeInfo,

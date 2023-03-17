@@ -31,8 +31,8 @@
 class TENACITY_DLL_API AudioIoCallback /* not final */ : public AudioIOBase
 {
     public:
-        AudioIoCallback();
-        ~AudioIoCallback();
+        AudioIoCallback() = default;
+        ~AudioIoCallback() override = default;
 
     public:
         // This function executes in a thread spawned by the PortAudio library
@@ -78,7 +78,7 @@ class TENACITY_DLL_API AudioIoCallback /* not final */ : public AudioIOBase
         bool GetHasSolo() { return mHasSolo; }
     #endif
 
-        std::shared_ptr<AudioIOListener> GetListener() const
+        [[nodiscard]] std::shared_ptr<AudioIOListener> GetListener() const
         {
             return mListener.lock();
         }
@@ -388,7 +388,7 @@ class TENACITY_DLL_API AudioIoCallback /* not final */ : public AudioIOBase
             }
             #endif
 
-            ~ScrubState() {}
+            ~ScrubState() = default;
 
             private:
             struct Data
