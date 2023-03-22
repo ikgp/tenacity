@@ -36,7 +36,7 @@ most commonly asked questions about Audacity.
 #include "ProjectWindows.h"
 #include "shuttle/ShuttleGui.h"
 #include "widgets/AudacityMessageBox.h"
-#include "widgets/HelpSystem.h"
+#include "widgets/HtmlWindow.h"
 
 #include "theme/AllThemeResources.h"
 #include "HelpText.h"
@@ -139,7 +139,7 @@ void SplashDialog::Populate( ShuttleGui & S )
 #endif
       .AddWindow( icon );
 
-   mpHtml = safenew LinkingHtmlWindow(S.GetParent(), -1,
+   mpHtml = safenew HtmlWindow(S.GetParent(), -1,
                                          wxDefaultPosition,
                                          wxSize(506, 280),
                                          wxHW_SCROLLBAR_AUTO | wxSUNKEN_BORDER );

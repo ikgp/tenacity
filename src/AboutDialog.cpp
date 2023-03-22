@@ -46,8 +46,8 @@ hold information about one contributor to Audacity.
 #include "BuildInfo.h"
 #include "HelpText.h"
 #include "shuttle/ShuttleGui.h"
-#include "widgets/HelpSystem.h"
 #include "ui/AccessibleLinksFormatter.h"
+#include "widgets/HtmlWindow.h"
 
 #include "theme/AllThemeResources.h"
 #include "theme/Theme.h"
@@ -539,7 +539,7 @@ void AboutDialog::PopulateAudacityPage( ShuttleGui & S )
    }
    S.Prop(0).AddWindow( icon );
 
-   HtmlWindow *html = safenew LinkingHtmlWindow(S.GetParent(), -1,
+   HtmlWindow *html = safenew HtmlWindow(S.GetParent(), -1,
                                          wxDefaultPosition,
                                          wxSize(ABOUT_DIALOG_WIDTH, 359),
                                          wxHW_SCROLLBAR_AUTO | wxSUNKEN_BORDER);
@@ -565,7 +565,7 @@ void AboutDialog::PopulateInformationPage( ShuttleGui & S )
    wxTextOutputStream informationStr( o );   // string to build up list of information in
    S.StartNotebookPage( XO("Build Information") );  // start the tab
    S.StartVerticalLay(2);  // create the window
-   HtmlWindow *html = safenew LinkingHtmlWindow(S.GetParent(), -1, wxDefaultPosition,
+   HtmlWindow *html = safenew HtmlWindow(S.GetParent(), -1, wxDefaultPosition,
                            wxSize(ABOUT_DIALOG_WIDTH, 264),
                            wxHW_SCROLLBAR_AUTO | wxSUNKEN_BORDER);
    // create a html pane in it to put the content in.
@@ -792,7 +792,7 @@ void AboutDialog::PopulateLicensePage( ShuttleGui & S )
    S.StartNotebookPage(XO("GPL License"));
    S.Prop(1).StartPanel();
    {
-      HtmlWindow* html = safenew LinkingHtmlWindow(
+      HtmlWindow* html = safenew HtmlWindow(
          S.GetParent(), -1, wxDefaultPosition, wxSize(ABOUT_DIALOG_WIDTH, 264),
          wxHW_SCROLLBAR_AUTO | wxSUNKEN_BORDER);
 
