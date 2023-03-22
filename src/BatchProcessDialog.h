@@ -39,7 +39,6 @@ class ApplyMacroDialog : public wxDialogWrapper {
    virtual void OnApplyToProject(wxCommandEvent & event);
    virtual void OnApplyToFiles(wxCommandEvent & event);
    virtual void OnCancel(wxCommandEvent & event);
-   virtual void OnHelp(wxCommandEvent & event);
 
    virtual ManualPageID GetHelpPageName() {return "Apply_Macro";}
 

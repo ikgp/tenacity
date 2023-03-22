@@ -62,7 +62,6 @@
 #include "import/Import.h"
 #include "widgets/AudacityMessageBox.h"
 #include "widgets/AudacityTextEntryDialog.h"
-#include "widgets/HelpSystem.h"
 
 #if wxUSE_ACCESSIBILITY
 #include "widgets/WindowAccessible.h"
@@ -86,7 +85,6 @@ BEGIN_EVENT_TABLE(ApplyMacroDialog, wxDialogWrapper)
    EVT_BUTTON(ApplyToFilesID, ApplyMacroDialog::OnApplyToFiles)
    EVT_BUTTON(wxID_CANCEL, ApplyMacroDialog::OnCancel)
    EVT_BUTTON(wxID_CLOSE, ApplyMacroDialog::OnCancel)
-   EVT_BUTTON(wxID_HELP, ApplyMacroDialog::OnHelp)
 END_EVENT_TABLE()
 
 ApplyMacroDialog::ApplyMacroDialog(
@@ -180,7 +178,7 @@ void ApplyMacroDialog::PopulateOrExchange(ShuttleGui &S)
       /* i18n-hint: The Expand button makes the dialog bigger, with more in it */
       mResize = S.Id(ExpandID).AddButton(XXO("&Expand"));
       S.AddSpace( 10,10,1 );
-      S.AddStandardButtons( eCloseButton | eHelpButton);
+      S.AddStandardButtons( eCloseButton );
    }
    S.EndHorizontalLay();
 }
@@ -220,12 +218,6 @@ void ApplyMacroDialog::PopulateMacros()
       if( bFound )
          mMacros->EnsureVisible( item );
    }
-}
-
-void ApplyMacroDialog::OnHelp(wxCommandEvent & WXUNUSED(event))
-{
-   const auto &page = GetHelpPageName();
-   HelpSystem::ShowHelp(this, page, true);
 }
 
 void ApplyMacroDialog::OnApplyToProject(wxCommandEvent & WXUNUSED(event))
@@ -714,7 +706,7 @@ void MacrosWindow::PopulateOrExchange(ShuttleGui & S)
       // OnOK saves without prompting.
       // That difference is too slight to merit a button, and with the OK
       // button, people might expect the dialog to apply the macro too.
-      S.AddStandardButtons( /*eOkButton |*/ eCloseButton | eHelpButton);
+      S.AddStandardButtons( /*eOkButton |*/ eCloseButton );
    }
 
    S.EndHorizontalLay();

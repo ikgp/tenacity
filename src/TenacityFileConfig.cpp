@@ -85,10 +85,7 @@ void TenacityFileConfig::Warn()
       {
          // Can't use themed bitmap since the theme manager might not be
          // initialized yet and it requires a configuration file.
-         wxButton *b = S.Id(wxID_HELP).AddBitmapButton(wxBitmap(Help_xpm));
-         b->SetToolTip( XO("Help").Translation() );
-         b->SetLabel(XO("Help").Translation());       // for screen readers
-
+         wxButton *b;
          b = S.Id(wxID_CANCEL).AddButton(XXO("&Quit Tenacity"));
          b = S.Id(wxID_OK).AddButton(XXO("&Retry"));
          dlg.SetAffirmativeId(wxID_OK);
@@ -114,15 +111,6 @@ void TenacityFileConfig::Warn()
 
    switch (dlg.ShowModal())
    {
-      case wxID_HELP:
-         // Can't use the HelpSystem since the theme manager may not
-         // yet be initialized and it requires a configuration file.
-         OpenInDefaultBrowser("https://" +
-                              HelpSystem::HelpHostname +
-                              HelpSystem::HelpServerHomeDir +
-                              "Error:_Audacity_settings_file_unwritable");
-      break;
-
       case wxID_CANCEL:
          _exit(-1);
       break;

@@ -2400,20 +2400,6 @@ std::unique_ptr<wxSizer> CreateStdButtonSizer(wxWindow *parent, long buttons, wx
       bs->AddButton( makeButton( wxID_CANCEL, XO("&Close").Translation() ) );
    }
 
-#if defined(__WXMSW__)
-   // See below for explanation
-   if( buttons & eHelpButton )
-   {
-      // Replace standard Help button with smaller icon button.
-      // bs->AddButton(safenew wxButton(parent, wxID_HELP));
-      b = safenew wxBitmapButton(parent, wxID_HELP, theTheme.Bitmap( bmpHelpIcon ));
-      b->SetToolTip( XO("Help").Translation() );
-      b->SetLabel(XO("Help").Translation());       // for screen readers
-      b->SetName( b->GetLabel() );
-      bs->AddButton( b );
-   }
-#endif
-
    if (buttons & ePreviewButton)
    {
       bs->Add( makeButton( ePreviewID, XO("&Preview").Translation() ),
@@ -2463,28 +2449,6 @@ std::unique_ptr<wxSizer> CreateStdButtonSizer(wxWindow *parent, long buttons, wx
       b = makeButton( eDebugID, XO("Debu&g").Translation() );
       bs->Insert( ++lastLastSpacer, b, 0, wxALIGN_CENTER | wxLEFT | wxRIGHT, margin );
    }
-
-#if !defined(__WXMSW__)
-   // Bug #2432: Couldn't find GTK guidelines, but Mac HIGs state:
-   //
-   //    View style 	                                          Help button position
-   //    Dialog with dismissal buttons (like OK and Cancel). 	Lower-left corner, vertically aligned with the dismissal buttons.
-   //    Dialog without dismissal buttons. 	                  Lower-left or lower-right corner.
-   //    Preference window or pane. 	                        Lower-left or lower-right corner.
-   //
-   // So, we're gonna cheat a little and use the lower-right corner.
-   if( buttons & eHelpButton )
-   {
-      // Replace standard Help button with smaller icon button.
-      // bs->AddButton(safenew wxButton(parent, wxID_HELP));
-      b = safenew wxBitmapButton(parent, wxID_HELP, theTheme.Bitmap( bmpHelpIcon ));
-      b->SetToolTip( XO("Help").Translation() );
-      b->SetLabel(XO("Help").Translation());       // for screen readers
-      b->SetName( b->GetLabel() );
-      bs->Add( b, 0, wxALIGN_CENTER );
-   }
-#endif
-
 
    auto s = std::make_unique<wxBoxSizer>( wxVERTICAL );
    s->Add( bs.release(), 1, wxEXPAND | wxALL, 7 );

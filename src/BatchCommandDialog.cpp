@@ -44,8 +44,6 @@ selected command.
 #include "Project.h"
 #include "effects/EffectManager.h"
 #include "shuttle/ShuttleGui.h"
-#include "widgets/HelpSystem.h"
-
 
 #define CommandsListID        7001
 #define EditParamsButtonID    7002
@@ -54,7 +52,6 @@ selected command.
 BEGIN_EVENT_TABLE(MacroCommandDialog, wxDialogWrapper)
    EVT_BUTTON(wxID_OK,                     MacroCommandDialog::OnOk)
    EVT_BUTTON(wxID_CANCEL,                 MacroCommandDialog::OnCancel)
-   EVT_BUTTON(wxID_HELP,                   MacroCommandDialog::OnHelp)
    EVT_BUTTON(EditParamsButtonID,          MacroCommandDialog::OnEditParams)
    EVT_BUTTON(UsePresetButtonID,           MacroCommandDialog::OnUsePreset)
    EVT_LIST_ITEM_ACTIVATED(CommandsListID, MacroCommandDialog::OnItemSelected)
@@ -123,7 +120,7 @@ void MacroCommandDialog::PopulateOrExchange(ShuttleGui &S)
    }
    S.EndVerticalLay();
 
-   S.AddStandardButtons( eOkButton | eCancelButton | eHelpButton);
+   S.AddStandardButtons( eOkButton | eCancelButton );
 
    PopulateCommandList();
    if (mChoices->GetItemCount() > 0) {
@@ -169,12 +166,6 @@ void MacroCommandDialog::OnOk(wxCommandEvent & WXUNUSED(event))
 void MacroCommandDialog::OnCancel(wxCommandEvent & WXUNUSED(event))
 {
    EndModal(false);
-}
-
-void MacroCommandDialog::OnHelp(wxCommandEvent & WXUNUSED(event))
-{
-   const auto &page = GetHelpPageName();
-   HelpSystem::ShowHelp(this, page, true);
 }
 
 void MacroCommandDialog::OnItemSelected(wxListEvent &event)

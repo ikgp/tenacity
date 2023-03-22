@@ -62,7 +62,6 @@ class LabelDialog final : public wxDialogWrapper
    void Populate();
    void PopulateOrExchange( ShuttleGui & S );
    void PopulateLabels();
-   void OnHelp(wxCommandEvent & event);
    ManualPageID GetHelpPageName() {return "Labels_Editor";}
 
    bool TransferDataToWindow() override;

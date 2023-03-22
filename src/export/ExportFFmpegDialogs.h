@@ -212,7 +212,6 @@ public:
    ~ExportFFmpegOptions();
    void PopulateOrExchange(ShuttleGui & S);
    void OnOK(wxCommandEvent& event);
-   void OnGetURL(wxCommandEvent& event);
    void OnFormatList(wxCommandEvent& event);
    void DoOnFormatList();
    void OnCodecList(wxCommandEvent& event);

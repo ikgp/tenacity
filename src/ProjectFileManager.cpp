@@ -1352,13 +1352,12 @@ public:
       {
          S.AddFixedText(text, false, 500);
 
-         S.AddStandardButtons(eYesButton | eNoButton | eHelpButton);
+         S.AddStandardButtons(eYesButton | eNoButton );
       }
       S.EndVerticalLay();
 
       FindWindowById(wxID_YES, this)->Bind(wxEVT_BUTTON, &CompactDialog::OnYes, this);
       FindWindowById(wxID_NO, this)->Bind(wxEVT_BUTTON, &CompactDialog::OnNo, this);
-      FindWindowById(wxID_HELP, this)->Bind(wxEVT_BUTTON, &CompactDialog::OnGetURL, this);
 
       Layout();
       Fit();
@@ -1373,11 +1372,6 @@ public:
    void OnNo(wxCommandEvent &WXUNUSED(evt))
    {
       EndModal(wxNO);
-   }
-
-   void OnGetURL(wxCommandEvent &WXUNUSED(evt))
-   {
-      HelpSystem::ShowHelp(this, L"File_Menu:_Compact_Project", true);
    }
 };
 }

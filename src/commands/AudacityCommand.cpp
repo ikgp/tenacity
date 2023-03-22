@@ -251,7 +251,6 @@ int AudacityCommand::MessageBox(
 
 BEGIN_EVENT_TABLE(AudacityCommandDialog, wxDialogWrapper)
    EVT_BUTTON(wxID_OK, AudacityCommandDialog::OnOk)
-   EVT_BUTTON(wxID_HELP, AudacityCommandDialog::OnHelp)
    EVT_BUTTON(wxID_CANCEL, AudacityCommandDialog::OnCancel)
 END_EVENT_TABLE()
 
@@ -267,8 +266,6 @@ AudacityCommandDialog::AudacityCommandDialog(wxWindow * parent,
    wxASSERT( pCommand );
    mpCommand = pCommand;
    mAdditionalButtons = additionalButtons |eCancelButton;
-   if( !pCommand->ManualPage().empty() )
-      mAdditionalButtons |= eHelpButton;
 }
 
 bool AudacityCommandDialog::Init()
@@ -338,14 +335,3 @@ void AudacityCommandDialog::OnCancel(wxCommandEvent & WXUNUSED(evt))
 {
    EndModal(false);
 }
-
-void AudacityCommandDialog::OnHelp(wxCommandEvent & WXUNUSED(event))
-{
-   if( mpCommand )
-   {
-      // otherwise use ShowHelp
-      HelpSystem::ShowHelp(FindWindow(wxID_HELP), mpCommand->ManualPage(), true);
-   }
-}
-
-

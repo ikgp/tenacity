@@ -41,7 +41,6 @@ private:
 
    void OnPane( wxCollapsiblePaneEvent &event );
    void OnOk( wxCommandEvent &event );
-   void OnHelp( wxCommandEvent &event );
    DECLARE_EVENT_TABLE()
 };
 

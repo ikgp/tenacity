@@ -789,7 +789,6 @@ BEGIN_EVENT_TABLE(TagsEditorDialog, wxDialogWrapper)
    EVT_BUTTON(SaveDefaultsID, TagsEditorDialog::OnSaveDefaults)
    EVT_BUTTON(AddID, TagsEditorDialog::OnAdd)
    EVT_BUTTON(RemoveID, TagsEditorDialog::OnRemove)
-   EVT_BUTTON(wxID_HELP, TagsEditorDialog::OnHelp)
    EVT_BUTTON(wxID_CANCEL, TagsEditorDialog::OnCancel)
    EVT_BUTTON(wxID_OK, TagsEditorDialog::OnOk)
    EVT_CHECKBOX( DontShowID, TagsEditorDialog::OnDontShow )
@@ -959,7 +958,7 @@ void TagsEditorDialog::PopulateOrExchange(ShuttleGui & S)
    }
    S.EndVerticalLay();
 
-   S.AddStandardButtons(eOkButton | eCancelButton | eHelpButton);
+   S.AddStandardButtons(eOkButton | eCancelButton);
 }
 
 void TagsEditorDialog::OnDontShow( wxCommandEvent & Evt )
@@ -967,11 +966,6 @@ void TagsEditorDialog::OnDontShow( wxCommandEvent & Evt )
    bool bShow = !Evt.IsChecked();
    gPrefs->Write(wxT("/AudioFiles/ShowId3Dialog"), bShow );
    gPrefs->Flush();
-}
-
-void TagsEditorDialog::OnHelp(wxCommandEvent& WXUNUSED(event))
-{
-   HelpSystem::ShowHelp(this, L"Metadata_Editor", true);
 }
 
 bool TagsEditorDialog::TransferDataFromWindow()

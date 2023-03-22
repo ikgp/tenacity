@@ -115,7 +115,6 @@ public:
 
    void OnOk(wxCommandEvent &event);
    void OnCancel(wxCommandEvent &event);
-   void OnHelp(const ManualPageID &Str);
    void OnFix(const PrefSetter &setter, wxWindowID id);
 
    TenacityProject &mProject;
@@ -181,18 +180,6 @@ void QuickFixDialog::AddStuck( ShuttleGui & S, bool & bBool,
          ->Bind( wxEVT_BUTTON, [this, prefSetter, id](wxCommandEvent&){
             OnFix( prefSetter, id );
          } );
-
-   {
-     // Replace standard Help button with smaller icon button.
-      // bs->AddButton(safenew wxButton(parent, wxID_HELP));
-      auto b = safenew wxBitmapButton(S.GetParent(), HelpButtonID+mItem, theTheme.Bitmap( bmpHelpIcon ));
-      b->SetToolTip( _("Help") );
-      b->SetLabel(_("Help"));       // for screen readers
-      b->Bind( wxEVT_BUTTON, [this, Help](const wxCommandEvent&){
-         OnHelp( Help );
-      } );
-      S.AddWindow( b );
-   }
 }
 
 void QuickFixDialog::PopulateOrExchange(ShuttleGui & S)
@@ -253,16 +240,10 @@ void QuickFixDialog::PopulateOrExchange(ShuttleGui & S)
    S.EndStatic();
 
    S.StartHorizontalLay(wxALIGN_CENTER_HORIZONTAL, 0);
-      S.AddStandardButtons(eCloseButton + (bStuckInMode ? 0 : eHelpButton));
+      S.AddStandardButtons(eCloseButton);
    S.EndHorizontalLay();
 
    S.EndVerticalLay();
-
-   wxButton * pBtn = (wxButton*)FindWindowById( wxID_HELP );
-   if( pBtn )
-      pBtn->Bind( wxEVT_BUTTON, [this]( const wxCommandEvent & ){
-         OnHelp( "Quick_Fix#" );
-      } );
 }
 
 void QuickFixDialog::OnOk(wxCommandEvent &event)
@@ -275,11 +256,6 @@ void QuickFixDialog::OnCancel(wxCommandEvent &event)
 {
    (void)event;// Compiler food
    EndModal(wxID_CANCEL);
-}
-
-void QuickFixDialog::OnHelp(const ManualPageID &Str)
-{
-   HelpSystem::ShowHelp(this, Str, true);
 }
 
 void QuickFixDialog::OnFix(const PrefSetter &setter, wxWindowID id)

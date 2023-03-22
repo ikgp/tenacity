@@ -21,7 +21,6 @@ public:
    virtual ~UnwritableLocationErrorDialog();
 
    void OnOk(wxCommandEvent& event);
-   void OnError(wxCommandEvent& event);
 
    DECLARE_EVENT_TABLE()
 };

@@ -1289,7 +1289,6 @@ void FFmpegPresets::WriteXML(XMLWriter &xmlFile) const
 
 BEGIN_EVENT_TABLE(ExportFFmpegOptions, wxDialogWrapper)
    EVT_BUTTON(wxID_OK,ExportFFmpegOptions::OnOK)
-   EVT_BUTTON(wxID_HELP,ExportFFmpegOptions::OnGetURL)
    EVT_LISTBOX(FEFormatID,ExportFFmpegOptions::OnFormatList)
    EVT_LISTBOX(FECodecID,ExportFFmpegOptions::OnCodecList)
    EVT_BUTTON(FEAllFormatsID,ExportFFmpegOptions::OnAllFormats)
@@ -1986,7 +1985,7 @@ void ExportFFmpegOptions::PopulateOrExchange(ShuttleGui & S)
             S.EndStatic();
             //S.EndScroller();
             S.SetBorder( 5 );
-            S.AddStandardButtons(eOkButton | eCancelButton | eHelpButton );
+            S.AddStandardButtons(eOkButton | eCancelButton);
          }
          S.EndVerticalLay();
       }
@@ -2615,11 +2614,5 @@ void ExportFFmpegOptions::OnOK(wxCommandEvent& WXUNUSED(event))
 
    return;
 }
-
-void ExportFFmpegOptions::OnGetURL(wxCommandEvent & WXUNUSED(event))
-{
-   HelpSystem::ShowHelp(this, L"Custom_FFmpeg_Export_Options");
-}
-
 
 #endif

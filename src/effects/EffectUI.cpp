@@ -702,7 +702,6 @@ EVT_PAINT(EffectUIHost::OnPaint)
 EVT_CLOSE(EffectUIHost::OnClose)
 EVT_BUTTON(wxID_APPLY, EffectUIHost::OnApply)
 EVT_BUTTON(wxID_CANCEL, EffectUIHost::OnCancel)
-EVT_BUTTON(wxID_HELP, EffectUIHost::OnHelp)
 EVT_BUTTON(eDebugID, EffectUIHost::OnDebug)
 EVT_BUTTON(kMenuID, EffectUIHost::OnMenu)
 EVT_CHECKBOX(kEnableID, EffectUIHost::OnEnable)
@@ -1041,15 +1040,7 @@ bool EffectUIHost::Initialize()
             this->SetAcceleratorTable(wxNullAcceleratorTable);
          }
          else {
-            buttons = eApplyButton | eCloseButton | eHelpButton;
-            wxAcceleratorEntry entries[1];
-#if defined(__WXMAC__)
-            // Is there a standard shortcut on Mac?
-#else
-            entries[0].Set(wxACCEL_NORMAL, (int) WXK_F1, wxID_HELP);
-#endif
-            wxAcceleratorTable accel(1, entries);
-            this->SetAcceleratorTable(accel);
+            buttons = eApplyButton | eCloseButton;
          }
 
          if (mEffect && mEffect->mUIDebug) {
@@ -1232,20 +1223,6 @@ void EffectUIHost::OnCancel(wxCommandEvent & WXUNUSED(evt))
 {
    DoCancel();
    Close();
-}
-
-void EffectUIHost::OnHelp(wxCommandEvent & WXUNUSED(event))
-{
-   if (mEffect && mEffect->GetFamily() == NYQUISTEFFECTS_FAMILY && (mEffect->ManualPage().empty())) {
-      // Old ShowHelp required when there is no on-line manual.
-      // Always use default web browser to allow full-featured HTML pages.
-      HelpSystem::ShowHelp(FindWindow(wxID_HELP), mEffect->HelpPage(), wxEmptyString, true, true);
-   }
-   else if( mEffect )
-   {
-      // otherwise use the NEW ShowHelp
-      HelpSystem::ShowHelp(FindWindow(wxID_HELP), mEffect->ManualPage(), true);
-   }
 }
 
 void EffectUIHost::OnDebug(wxCommandEvent & evt)

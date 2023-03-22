@@ -55,7 +55,6 @@ public:
 private:
    void OnOK( wxCommandEvent &event );
    void OnShowLog(wxCommandEvent& event);
-   void OnHelp(wxCommandEvent& event);
 
    wxRadioBox* mRadioBox;
    ManualPageID mHelpPage;
@@ -68,7 +67,6 @@ private:
 BEGIN_EVENT_TABLE(MultiDialog, wxDialogWrapper)
    EVT_BUTTON( wxID_OK, MultiDialog::OnOK )
    EVT_BUTTON(ID_SHOW_LOG_BUTTON, MultiDialog::OnShowLog)
-   EVT_BUTTON(wxID_HELP, MultiDialog::OnHelp)
 END_EVENT_TABLE()
 
 MultiDialog::MultiDialog(wxWindow * pParent,
@@ -143,13 +141,6 @@ MultiDialog::MultiDialog(wxWindow * pParent,
 
             auto pButton = S.Id(wxID_OK)
                .AddButton(XXO("OK"), wxALIGN_CENTER, !log);
-
-            if (!mHelpPage.empty()) {
-               auto pHelpBtn = S.Id(wxID_HELP)
-                  .AddBitmapButton(theTheme.Bitmap(bmpHelpIcon), wxALIGN_CENTER, false);
-               pHelpBtn->SetToolTip(XO("Help").Translation());
-               pHelpBtn->SetLabel(XO("Help").Translation());       // for screen readers
-            }
          }
          S.EndHorizontalLay();
       }
@@ -169,11 +160,6 @@ void MultiDialog::OnOK(wxCommandEvent & WXUNUSED(event))
 void MultiDialog::OnShowLog(wxCommandEvent & WXUNUSED(event))
 {
    LogWindow::Show();
-}
-
-void MultiDialog::OnHelp(wxCommandEvent & WXUNUSED(event))
-{
-   HelpSystem::ShowHelp(FindWindow(wxID_HELP), mHelpPage, true);
 }
 
 int ShowMultiDialog(const TranslatableString &message,

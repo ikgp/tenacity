@@ -85,7 +85,6 @@ wxDEFINE_EVENT(AUDACITY_FILE_SUFFIX_EVENT, wxCommandEvent);
 
 BEGIN_EVENT_TABLE(Exporter, wxEvtHandler)
    EVT_FILECTRL_FILTERCHANGED(wxID_ANY, Exporter::OnFilterChanged)
-   EVT_BUTTON(wxID_HELP, Exporter::OnHelp)
 END_EVENT_TABLE()
 
 namespace {
@@ -166,12 +165,6 @@ Exporter::Exporter( TenacityProject &project )
 
 Exporter::~Exporter()
 {
-}
-
-void Exporter::OnHelp(wxCommandEvent& WXUNUSED(evt))
-{
-   wxWindow * pWin = FindProjectFrame( mProject );
-   HelpSystem::ShowHelp(pWin, L"File_Export_Dialog", true);
 }
 
 void Exporter::SetFileDialogTitle( const TranslatableString & DialogTitle )
@@ -802,11 +795,6 @@ void Exporter::CreateUserPane(wxWindow *parent)
             }
          }
          S.EndSimplebook();
-
-         auto b = safenew wxBitmapButton(S.GetParent(), wxID_HELP, theTheme.Bitmap( bmpHelpIcon ));
-         b->SetToolTip( XO("Help").Translation() );
-         b->SetLabel(XO("Help").Translation());       // for screen readers
-         S.Position(wxALIGN_BOTTOM | wxRIGHT | wxBOTTOM).AddWindow(b);
       }
       S.EndHorizontalLay();
    }
@@ -1175,7 +1163,6 @@ enum
 BEGIN_EVENT_TABLE( ExportMixerDialog, wxDialogWrapper )
    EVT_BUTTON( wxID_OK, ExportMixerDialog::OnOk )
    EVT_BUTTON( wxID_CANCEL, ExportMixerDialog::OnCancel )
-   EVT_BUTTON( wxID_HELP, ExportMixerDialog::OnMixerPanelHelp )
    EVT_SIZE( ExportMixerDialog::OnSize )
    EVT_SLIDER( ID_SLIDER_CHANNEL, ExportMixerDialog::OnSlider )
 END_EVENT_TABLE()
@@ -1256,7 +1243,7 @@ ExportMixerDialog::ExportMixerDialog( const TrackList *tracks, bool selectedOnly
       }
       S.EndHorizontalLay();
 
-      S.AddStandardButtons( eCancelButton | eOkButton | eHelpButton );
+      S.AddStandardButtons( eCancelButton | eOkButton );
    }
 
    SetAutoLayout(true);
@@ -1301,12 +1288,6 @@ void ExportMixerDialog::OnCancel(wxCommandEvent & WXUNUSED(event))
 {
    EndModal( wxID_CANCEL );
 }
-
-void ExportMixerDialog::OnMixerPanelHelp(wxCommandEvent & WXUNUSED(event))
-{
-   HelpSystem::ShowHelp(this, L"Advanced_Mixing_Options", true);
-}
-
 
 TranslatableString AudacityExportCaptionStr()
 {

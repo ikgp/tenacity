@@ -103,7 +103,6 @@ private:
    void OnByNumber(wxCommandEvent& event);
    void OnPrefix(wxCommandEvent& event);
    void OnCancel(wxCommandEvent& event);
-   void OnHelp(wxCommandEvent& event);
    void OnExport(wxCommandEvent& event);
 
 private:

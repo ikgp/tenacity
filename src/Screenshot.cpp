@@ -79,7 +79,6 @@ class ScreenshotBigDialog final : public wxFrame,
    void OnCloseWindow(wxCloseEvent & event);
    void OnUIUpdate(wxUpdateUIEvent & event);
    void OnDirChoose(wxCommandEvent & event);
-   void OnGetURL(wxCommandEvent & event);
    void OnClose(wxCommandEvent & event );
 
 
@@ -252,7 +251,6 @@ enum
 
 BEGIN_EVENT_TABLE(ScreenshotBigDialog, wxFrame)
    EVT_CLOSE(ScreenshotBigDialog::OnCloseWindow)
-   EVT_BUTTON(wxID_HELP, ScreenshotBigDialog::OnGetURL)
    EVT_BUTTON(wxID_CANCEL, ScreenshotBigDialog::OnClose)
 
    EVT_UPDATE_UI(IdCaptureFullScreen,   ScreenshotBigDialog::OnUIUpdate)
@@ -483,7 +481,7 @@ void ScreenshotBigDialog::PopulateOrExchange(ShuttleGui & S)
          S.EndHorizontalLay();
       }
       S.EndStatic();
-      S.AddStandardButtons(eCloseButton |eHelpButton);
+      S.AddStandardButtons(eCloseButton);
    }
    S.EndPanel();
 
@@ -559,11 +557,6 @@ void ScreenshotBigDialog::OnClose(wxCommandEvent &  WXUNUSED(event))
    }
 
    Destroy();
-}
-
-void ScreenshotBigDialog::OnGetURL(wxCommandEvent & WXUNUSED(event))
-{
-   HelpSystem::ShowHelp(this, L"Screenshot");
 }
 
 void ScreenshotBigDialog::OnUIUpdate(wxUpdateUIEvent &  WXUNUSED(event))

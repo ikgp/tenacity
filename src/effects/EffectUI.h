@@ -150,7 +150,6 @@ private:
    void OnApply(wxCommandEvent & evt);
    void DoCancel();
    void OnCancel(wxCommandEvent & evt);
-   void OnHelp(wxCommandEvent & evt);
    void OnDebug(wxCommandEvent & evt);
    void OnMenu(wxCommandEvent & evt);
    void OnEnable(wxCommandEvent & evt);

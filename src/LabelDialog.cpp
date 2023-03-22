@@ -93,7 +93,6 @@ BEGIN_EVENT_TABLE(LabelDialog, wxDialogWrapper)
    EVT_COMMAND(wxID_ANY, EVT_TIMETEXTCTRL_UPDATED, LabelDialog::OnUpdate)
    EVT_COMMAND(wxID_ANY, EVT_FREQUENCYTEXTCTRL_UPDATED,
                LabelDialog::OnFreqUpdate)
-   EVT_BUTTON(wxID_HELP, LabelDialog::OnHelp)
 END_EVENT_TABLE()
 
 LabelDialog::LabelDialog(wxWindow *parent,
@@ -281,17 +280,10 @@ void LabelDialog::PopulateOrExchange( ShuttleGui & S )
 
    S.StartHorizontalLay(wxALIGN_RIGHT, false);
    {
-      S.AddStandardButtons( eOkButton | eCancelButton | eHelpButton);
+      S.AddStandardButtons( eOkButton | eCancelButton );
    }
    S.EndHorizontalLay();
 }
-
-void LabelDialog::OnHelp(wxCommandEvent & WXUNUSED(event))
-{
-   const auto &page = GetHelpPageName();
-   HelpSystem::ShowHelp(this, page, true);
-}
-
 
 bool LabelDialog::TransferDataToWindow()
 {

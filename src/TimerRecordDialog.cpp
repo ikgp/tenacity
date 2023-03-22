@@ -140,7 +140,6 @@ BEGIN_EVENT_TABLE(TimerRecordDialog, wxDialogWrapper)
    EVT_TEXT(ID_TIMETEXT_DURATION, TimerRecordDialog::OnTimeText_Duration)
 
    EVT_BUTTON(wxID_OK, TimerRecordDialog::OnOK)
-   EVT_BUTTON(wxID_HELP, TimerRecordDialog::OnHelpButtonClick)
 
    EVT_TIMER(TIMER_ID, TimerRecordDialog::OnTimer)
 
@@ -361,11 +360,6 @@ void TimerRecordDialog::OnAutoSaveCheckBox_Change(wxCommandEvent& WXUNUSED(event
 
 void TimerRecordDialog::OnAutoExportCheckBox_Change(wxCommandEvent& WXUNUSED(event)) {
    EnableDisableAutoControls(m_pTimerAutoExportCheckBoxCtrl->GetValue(), CONTROL_GROUP_EXPORT);
-}
-
-void TimerRecordDialog::OnHelpButtonClick(wxCommandEvent& WXUNUSED(event))
-{
-   HelpSystem::ShowHelp(this, L"Timer_Record", true);
 }
 
 void TimerRecordDialog::OnOK(wxCommandEvent& WXUNUSED(event))
@@ -915,7 +909,7 @@ void TimerRecordDialog::PopulateOrExchange(ShuttleGui& S)
    S.EndMultiColumn();
 
    // MY: Added the help button here
-   S.AddStandardButtons(eOkButton | eCancelButton | eHelpButton);
+   S.AddStandardButtons(eOkButton | eCancelButton);
 
    Layout();
    Fit();

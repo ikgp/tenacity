@@ -66,15 +66,9 @@ void ExportOptionsDialog::Populate()
         {
             auto okButton     = S.AddButton(XO("OK"));
             auto cancelButton = S.AddButton(XO("Cancel"));
-            auto helpButton   = new wxBitmapButton(S.GetParent(), wxID_HELP, theTheme.Bitmap( bmpHelpIcon ));
 
             okButton->Bind(wxEVT_BUTTON, &ExportOptionsDialog::OnOK, this);
             cancelButton->Bind(wxEVT_BUTTON, &ExportOptionsDialog::OnCancel, this);
-
-            helpButton->SetToolTip( XO("Help").Translation() );
-            helpButton->SetLabel(XO("Help").Translation()); // for screen readers
-            // S.Position(wxALIGN_TOP).AddWindow(helpButton);
-            S.AddWindow(helpButton);
         }
         S.EndHorizontalLay();
     }

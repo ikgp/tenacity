@@ -614,7 +614,7 @@ enum
    eCancelButton  = 0x0002,
    eYesButton     = 0x0004,
    eNoButton      = 0x0008,
-   eHelpButton    = 0x0010,
+   eHelpButton    = 0x0010, /// Unused
    ePreviewButton = 0x0020,
    eDebugButton   = 0x0040,
    eSettingsButton= 0x0080,

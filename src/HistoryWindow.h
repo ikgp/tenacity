@@ -51,7 +51,6 @@ class HistoryDialog final : public wxDialogWrapper,
    void OnDiscard(wxCommandEvent & event);
    void OnDiscardClipboard(wxCommandEvent & event);
    void OnCompact(wxCommandEvent & event);
-   void OnGetURL(wxCommandEvent & event);
 
    // PrefsListener implementation
    void UpdatePrefs() override;

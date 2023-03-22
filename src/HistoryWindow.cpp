@@ -45,7 +45,6 @@ undo memory so as to free up space.
 #include "ProjectWindows.h"
 #include "shuttle/ShuttleGui.h"
 #include "widgets/AudacityMessageBox.h"
-#include "widgets/HelpSystem.h"
 
 enum {
    ID_AVAIL = 1000,
@@ -65,7 +64,6 @@ BEGIN_EVENT_TABLE(HistoryDialog, wxDialogWrapper)
    EVT_BUTTON(ID_DISCARD, HistoryDialog::OnDiscard)
    EVT_BUTTON(ID_DISCARD_CLIPBOARD, HistoryDialog::OnDiscardClipboard)
    EVT_BUTTON(ID_COMPACT, HistoryDialog::OnCompact)
-   EVT_BUTTON(wxID_HELP, HistoryDialog::OnGetURL)
 END_EVENT_TABLE()
 
 #define HistoryTitle XO("History")
@@ -165,9 +163,9 @@ void HistoryDialog::Populate(ShuttleGui & S)
       S.EndStatic();
 #if defined(ALLOW_DISCARD)
       mCompact = safenew wxButton(this, ID_COMPACT, _("&Compact"));
-      S.AddStandardButtons(eOkButton | eHelpButton, mCompact);
+      S.AddStandardButtons(eOkButton, mCompact);
 #else
-      S.AddStandardButtons(eOkButton | eHelpButton);
+      S.AddStandardButtons(eOkButton);
 #endif
    }
    S.EndVerticalLay();
@@ -310,11 +308,6 @@ void HistoryDialog::OnCompact(wxCommandEvent & WXUNUSED(event))
       XO("Compacting actually freed %s of disk space.")
       .Format(Internat::FormatSize((before - after).GetValue())),
       XO("History"));
-}
-
-void HistoryDialog::OnGetURL(wxCommandEvent & WXUNUSED(event))
-{
-   HelpSystem::ShowHelp(this, L"Undo,_Redo_and_History");
 }
 
 void HistoryDialog::OnItemSelected(wxListEvent &event)

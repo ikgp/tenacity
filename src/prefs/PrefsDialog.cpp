@@ -375,7 +375,6 @@ BEGIN_EVENT_TABLE(PrefsDialog, wxDialogWrapper)
    EVT_BUTTON(wxID_OK, PrefsDialog::OnOK)
    EVT_BUTTON(wxID_CANCEL, PrefsDialog::OnCancel)
    EVT_BUTTON(wxID_PREVIEW, PrefsDialog::OnPreview)
-   EVT_BUTTON(wxID_HELP, PrefsDialog::OnHelp)
    EVT_TREE_KEY_DOWN(wxID_ANY, PrefsDialog::OnTreeKeyDown) // Handles key events when tree has focus
 END_EVENT_TABLE()
 
@@ -413,28 +412,7 @@ int wxTreebookExt::SetSelection(size_t n)
    PrefsPanel *const panel = static_cast<PrefsPanel *>(GetPage(n));
    const bool showHelp = (!panel->HelpPageName().empty());
    const bool showPreview = panel->ShowsPreviewButton();
-   wxWindow *const helpButton = wxWindow::FindWindowById(wxID_HELP, GetParent());
    wxWindow *const previewButton = wxWindow::FindWindowById(wxID_PREVIEW, GetParent());
-
-   if (helpButton) {
-      if (showHelp) {
-         wxAcceleratorEntry entries[1];
-#if defined(__WXMAC__)
-         // Is there a standard shortcut on Mac?
-#else
-         entries[0].Set(wxACCEL_NORMAL, (int) WXK_F1, wxID_HELP);
-#endif
-         wxAcceleratorTable accel(1, entries);
-         this->SetAcceleratorTable(accel);
-      }
-      else {
-         this->SetAcceleratorTable(wxNullAcceleratorTable);
-      }
-
-      const bool changed = helpButton->Show(showHelp);
-      if (changed)
-         GetParent()->Layout();
-   }
 
    if (previewButton) { // might still be NULL during population
       const bool changed = previewButton->Show(showPreview);
@@ -518,23 +496,11 @@ PrefsDialog::PrefsDialog(
          const auto &node = factories[0];
          const auto &factory = node.factory;
          mUniquePage = factory(S.GetParent(), wxID_ANY, pProject);
-         wxWindow * uniquePageWindow = S.Prop(1)
-            .Position(wxEXPAND)
-            .AddWindow(mUniquePage);
-         // We're not in the wxTreebook, so add the accelerator here
-         wxAcceleratorEntry entries[1];
-#if defined(__WXMAC__)
-         // Is there a standard shortcut on Mac?
-#else
-         entries[0].Set(wxACCEL_NORMAL, (int) WXK_F1, wxID_HELP);
-#endif
-         wxAcceleratorTable accel(1, entries);
-         uniquePageWindow->SetAcceleratorTable(accel);
       }
    }
    S.EndVerticalLay();
 
-   S.AddStandardButtons(eOkButton | eCancelButton | ePreviewButton | eHelpButton);
+   S.AddStandardButtons(eOkButton | eCancelButton | ePreviewButton);
 
    if (mUniquePage && !mUniquePage->ShowsPreviewButton()) {
       wxWindow *const previewButton =
@@ -655,12 +621,6 @@ PrefsPanel * PrefsDialog::GetCurrentPanel()
 void PrefsDialog::OnPreview(wxCommandEvent & WXUNUSED(event))
 {
    GetCurrentPanel()->Preview();
-}
-
-void PrefsDialog::OnHelp(wxCommandEvent & WXUNUSED(event))
-{
-   const auto &page = GetCurrentPanel()->HelpPageName();
-   HelpSystem::ShowHelp(this, page, true);
 }
 
 void PrefsDialog::ShuttleAll( ShuttleGui & S)

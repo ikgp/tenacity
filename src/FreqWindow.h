@@ -77,7 +77,6 @@ private:
 
    void OnCloseWindow(wxCloseEvent & event);
    void OnCloseButton(wxCommandEvent & event);
-   void OnGetURL(wxCommandEvent & event);
    void OnSize(wxSizeEvent & event);
    void OnPanScroller(wxScrollEvent & event);
    void OnZoomSlider(wxCommandEvent & event);

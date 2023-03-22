@@ -83,7 +83,6 @@ the mouse around.
 
 #include "WaveTrack.h"
 
-#include "./widgets/HelpSystem.h"
 #include "widgets/AudacityMessageBox.h"
 #include "widgets/Ruler.h"
 
@@ -177,7 +176,6 @@ BEGIN_EVENT_TABLE(FrequencyPlotDialog, wxDialogWrapper)
    EVT_BUTTON(FreqExportButtonID, FrequencyPlotDialog::OnExport)
    EVT_BUTTON(ReplotButtonID, FrequencyPlotDialog::OnReplot)
    EVT_BUTTON(wxID_CANCEL, FrequencyPlotDialog::OnCloseButton)
-   EVT_BUTTON(wxID_HELP, FrequencyPlotDialog::OnGetURL)
    EVT_CHECKBOX(GridOnOffID, FrequencyPlotDialog::OnGridOnOff)
    EVT_COMMAND(wxID_ANY, EVT_FREQWINDOW_RECALC, FrequencyPlotDialog::OnRecalc)
 END_EVENT_TABLE()
@@ -575,7 +573,7 @@ void FrequencyPlotDialog::Populate()
       //S.AddSpace(5);
    }
    S.EndMultiColumn();
-   S.AddStandardButtons( eHelpButton | eCloseButton );
+   S.AddStandardButtons( eCloseButton );
 
    // -------------------------------------------------------------------
    // ROW 8: Spacer
@@ -620,13 +618,6 @@ void FrequencyPlotDialog::Populate()
    // ourselves, but we'll leave that for a future date.
 //   gtk_widget_set_can_focus(vPanScroller->m_widget, true);
 #endif
-}
-
-void FrequencyPlotDialog::OnGetURL(wxCommandEvent & WXUNUSED(event))
-{
-   // Original help page is back on-line (March 2016), but the manual should be more reliable.
-   // http://www.eramp.com/WCAG_2_audio_contrast_tool_help.htm
-   HelpSystem::ShowHelp(this, L"Plot Spectrum");
 }
 
 bool FrequencyPlotDialog::Show(bool show)

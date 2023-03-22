@@ -18,7 +18,6 @@
 
 BEGIN_EVENT_TABLE(UnwritableLocationErrorDialog, wxDialogWrapper)
     EVT_BUTTON(wxID_OK, UnwritableLocationErrorDialog::OnOk)
-    EVT_BUTTON(wxID_HELP, UnwritableLocationErrorDialog::OnError)
 END_EVENT_TABLE()
 
 UnwritableLocationErrorDialog::UnwritableLocationErrorDialog(wxWindow* parent, const wxString& path)
@@ -77,7 +76,7 @@ UnwritableLocationErrorDialog::UnwritableLocationErrorDialog(wxWindow* parent, c
 
       S.AddSpace(0, 12);
 
-      S.AddStandardButtons(eHelpButton | eOkButton);
+      S.AddStandardButtons(eOkButton);
    }
    S.EndVerticalLay();
 
@@ -94,9 +93,4 @@ UnwritableLocationErrorDialog::~UnwritableLocationErrorDialog()
 void UnwritableLocationErrorDialog::OnOk(wxCommandEvent&)
 {
    EndModal(wxID_OK);
-}
-
-void UnwritableLocationErrorDialog::OnError(wxCommandEvent&)
-{
-   HelpSystem::ShowHelp(this, "Error:_Disk_full_or_not_writable", false);
 }

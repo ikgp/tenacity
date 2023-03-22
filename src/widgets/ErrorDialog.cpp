@@ -45,7 +45,6 @@
 BEGIN_EVENT_TABLE(ErrorDialog, wxDialogWrapper)
    EVT_COLLAPSIBLEPANE_CHANGED( wxID_ANY, ErrorDialog::OnPane )
    EVT_BUTTON( wxID_OK, ErrorDialog::OnOk)
-   EVT_BUTTON( wxID_HELP, ErrorDialog::OnHelp)
 END_EVENT_TABLE()
 
 ErrorDialog::ErrorDialog(
@@ -64,7 +63,7 @@ ErrorDialog::ErrorDialog(
    long buttonMask;
 
    // only add the help button if we have a URL
-   buttonMask = (helpPage.empty()) ? eOkButton : (eHelpButton | eOkButton);
+   buttonMask = eOkButton;
    dhelpPage = helpPage;
    dClose = Close;
    dModal = modal;
@@ -129,23 +128,4 @@ void ErrorDialog::OnOk(wxCommandEvent & WXUNUSED(event))
       EndModal(true);
    else
       Destroy();
-}
-
-void ErrorDialog::OnHelp(wxCommandEvent & WXUNUSED(event))
-{
-   const auto &str = dhelpPage.GET();
-   if( str.StartsWith(wxT("innerlink:")) )
-   {
-      HelpSystem::ShowHtmlText(
-         this,
-         TitleText(str.Mid( 10 ) ),
-         HelpText( str.Mid( 10 )),
-         false,
-         true );
-      return;
-   }
-   HelpSystem::ShowHelp( this, dhelpPage, dClose );
-   //OpenInDefaultBrowser( dhelpURL );
-   if(dClose)
-      EndModal(true);
 }
