@@ -553,7 +553,7 @@ void MeterPanel::OnPaint(wxPaintEvent & WXUNUSED(event))
       {
          // Give it a recessed look
          AColor::Bevel(dc, false, mBar[i].b);
-   
+
          // Draw the clip indicator bevel
          if (mClip)
          {
@@ -580,39 +580,46 @@ void MeterPanel::OnPaint(wxPaintEvent & WXUNUSED(event))
             }
    
             if (mBar[i].vert)
-            {
+            { 
+               dc.SetPen(*wxTRANSPARENT_PEN);
+
                // Draw the "critical" segment (starts at top of meter and works down)
                r.SetHeight(gradh);
-               dc.GradientFillLinear(r, red, yellow, wxSOUTH);
+               dc.SetPen(*wxTRANSPARENT_PEN);
+               dc.SetBrush(red);
+               dc.DrawRectangle(r);
    
                // Draw the "warning" segment
                r.SetTop(r.GetBottom());
-               dc.GradientFillLinear(r, yellow, green, wxSOUTH);
+               dc.SetBrush(yellow);
+               dc.DrawRectangle(r);
    
                // Draw the "safe" segment
                r.SetTop(r.GetBottom());
                r.SetBottom(mBar[i].r.GetBottom());
-               dc.SetPen(*wxTRANSPARENT_PEN);
                dc.SetBrush(green);
                dc.DrawRectangle(r);
             }
             else
             {
+               dc.SetPen(*wxTRANSPARENT_PEN);
+
                // Draw the "safe" segment
                r.SetWidth(r.GetWidth() - (int) (gradw + gradw + 0.5));
-               dc.SetPen(*wxTRANSPARENT_PEN);
                dc.SetBrush(green);
                dc.DrawRectangle(r);
    
                // Draw the "warning"  segment
                r.SetLeft(r.GetRight() + 1);
                r.SetWidth(floor(gradw));
-               dc.GradientFillLinear(r, green, yellow);
+               dc.SetBrush(yellow);
+               dc.DrawRectangle(r);
    
                // Draw the "critical" segment
                r.SetLeft(r.GetRight() + 1);
                r.SetRight(mBar[i].r.GetRight());
-               dc.GradientFillLinear(r, yellow, red);
+               dc.SetBrush(red);
+               dc.DrawRectangle(r);
             }
 #ifdef EXPERIMENTAL_METER_LED_STYLE
             if (!mBar[i].vert)
