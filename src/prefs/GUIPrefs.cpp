@@ -130,16 +130,6 @@ void GUIPrefs::Populate()
    // ----------------------- End of main section --------------
 }
 
-ChoiceSetting GUIManualLocation{
-   wxT("/GUI/Help"),
-   {
-      ByColumns,
-      { XO("Local") ,  XO("From Internet") , },
-      { wxT("Local") , wxT("FromInternet") , }
-   },
-   0 // "Local"
-};
-
 void GUIPrefs::PopulateOrExchange(ShuttleGui & S)
 {
    S.SetBorder(2);
@@ -156,8 +146,6 @@ void GUIPrefs::PopulateOrExchange(ShuttleGui & S)
                { ByColumns, mLangNames, mLangCodes }
             }
          );
-
-         S.TieChoice( XXO("Location of &Manual:"), GUIManualLocation);
 
          S.TieChoice( XXO("Th&eme:"), GUITheme());
 

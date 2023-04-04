@@ -60,8 +60,4 @@ int ShowClippingPrefsID();
 TENACITY_DLL_API
 int ShowTrackNameInWaveformPrefsID();
 
-extern TENACITY_DLL_API ChoiceSetting
-     GUIManualLocation
-;
-
 #endif

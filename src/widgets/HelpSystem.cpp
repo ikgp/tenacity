@@ -47,7 +47,6 @@
 #include "../shuttle/ShuttleGui.h"
 #include "../theme/Theme.h"
 #include "../HelpText.h"
-#include "../prefs/GUIPrefs.h"
 
 #ifdef USE_ALPHA_MANUAL
 const wxString HelpSystem::HelpHostname = wxT("alphamanual.audacityteam.org");
@@ -243,19 +242,7 @@ void HelpSystem::ShowHelp(wxWindow *parent,
                     bool alwaysDefaultBrowser)
 {
    wxASSERT(parent); // to justify safenew
-   wxString HelpMode = wxT("Local");
-
-   gPrefs->Read(wxT("/GUI/Help"), &HelpMode, wxT("Local") );
-
-   {
-      // these next lines are for legacy cfg files (pre 2.0) where we had different modes
-      if( (HelpMode == wxT("Standard")) || (HelpMode == wxT("InBrowser")) )
-      {
-         HelpMode = GUIManualLocation.Default().Internal();
-         GUIManualLocation.Write(HelpMode);
-         gPrefs->Flush();
-      }
-   }
+   wxString HelpMode = wxT("FromInternet");
 
    // Anchors (URLs with a '#' in them) are not supported by many OSs for local file names
    // See, for example, https://groups.google.com/forum/#!topic/wx-users/pC0uOZJalRQ
