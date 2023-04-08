@@ -29,4 +29,13 @@ inline int AudacityMessageBox(const TranslatableString& message,
       style, parent, x, y);
 }
 
+/// Mostly we use this so that we have the code for resizability
+/// in one place.  Other considerations like screen readers are also
+/// handled by having the code in one place.
+void ShowInfoDialog( wxWindow *parent,
+                     const TranslatableString &dlogTitle,
+                     const TranslatableString &shortMsg,
+                     const wxString &message,
+                     const int xSize, const int ySize);
+
 #endif

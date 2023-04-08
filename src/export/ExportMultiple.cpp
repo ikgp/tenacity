@@ -51,7 +51,6 @@
 #include "../shuttle/ShuttleGui.h"
 #include "../Tags.h"
 #include "../WaveTrack.h"
-#include "../widgets/HelpSystem.h"
 #include "../widgets/AudacityMessageBox.h"
 #include "../widgets/AudacityTextEntryDialog.h"
 #include "../widgets/ProgressDialog.h"
@@ -639,11 +638,13 @@ void ExportMultipleDialog::OnExport(wxCommandEvent& WXUNUSED(event))
 
       GuardedCall( [&] {
          // This results dialog is a child of this dialog.
-         HelpSystem::ShowInfoDialog( this,
-                                    XO("Export Multiple"),
-                                    msg,
-                                    FileList,
-                                    450,400);
+         ShowInfoDialog(
+            this,
+            XO("Export Multiple"),
+            msg,
+            FileList,
+            450, 400
+         );
       } );
    } );
 
