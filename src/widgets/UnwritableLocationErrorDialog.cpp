@@ -10,7 +10,6 @@
 
 #include "UnwritableLocationErrorDialog.h"
 
-#include "HelpSystem.h"
 #include "shuttle/ShuttleGui.h"
 
 #include "prefs/PrefsDialog.h"

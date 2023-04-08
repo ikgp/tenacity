@@ -44,8 +44,6 @@
 
 #include "PrefsPanel.h"
 
-#include "../widgets/HelpSystem.h"
-
 #if wxUSE_ACCESSIBILITY
 #include "../widgets/WindowAccessible.h"
 #endif

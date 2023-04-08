@@ -657,7 +657,6 @@ private:
 #include "../commands/AudacityCommand.h"
 #include "../commands/CommandContext.h"
 #include "../widgets/AudacityMessageBox.h"
-#include "../widgets/HelpSystem.h"
 
 // Tenacity libraries
 #include <lib-screen-geometry/ViewInfo.h>

@@ -71,9 +71,7 @@
 #include "../WaveTrack.h"
 #include "../widgets/AudacityMessageBox.h"
 #include "../widgets/Warning.h"
-#include "../widgets/HelpSystem.h"
 #include "../AColor.h"
-#include "widgets/HelpSystem.h"
 #include "widgets/ProgressDialog.h"
 
 //----------------------------------------------------------------------------

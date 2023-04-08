@@ -68,7 +68,6 @@
 #include "../Mix.h"
 #include "../Tags.h"
 #include "../widgets/AudacityMessageBox.h"
-#include "../widgets/HelpSystem.h"
 
 #if defined(USE_FFMPEG)
 

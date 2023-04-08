@@ -25,7 +25,6 @@ Audacity as well.
 #include <wx/stattext.h>
 
 #include "../ffmpeg/FFmpeg.h"
-#include "../widgets/HelpSystem.h"
 #include "../widgets/AudacityMessageBox.h"
 #include "../widgets/ReadOnlyText.h"
 #include "../widgets/wxTextCtrlWrapper.h"

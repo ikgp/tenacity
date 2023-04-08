@@ -48,7 +48,6 @@
 #include <lib-preferences/Prefs.h>
 
 #include "../shuttle/ShuttleGui.h"
-#include "../widgets/HelpSystem.h"
 
 #include "../WaveTrack.h"
 #include "../widgets/AudacityMessageBox.h"

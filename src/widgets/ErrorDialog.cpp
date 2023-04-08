@@ -36,7 +36,6 @@
 #include "../theme/AllThemeResources.h"
 #include "../shuttle/ShuttleGui.h"
 #include "../HelpText.h"
-#include "HelpSystem.h"
 
 // Tenacity libraries
 #include <lib-string-utils/CodeConversions.h>

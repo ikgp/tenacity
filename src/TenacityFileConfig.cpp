@@ -11,7 +11,6 @@ Paul Licameli split from Prefs.cpp
 
 #include "TenacityFileConfig.h"
 
-#include "widgets/HelpSystem.h"
 #include "widgets/wxPanelWrapper.h"
 #include "shuttle/ShuttleGui.h"
 #include "../images/Help.xpm"

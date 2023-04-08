@@ -25,7 +25,6 @@
 #include "../ProjectWindow.h"
 #include "../SelectFile.h"
 #include "../shuttle/ShuttleGui.h"
-#include "../widgets/HelpSystem.h"
 #include "../widgets/NumericTextCtrl.h"
 #include "../widgets/AudacityMessageBox.h"
 

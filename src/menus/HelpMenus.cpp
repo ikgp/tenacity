@@ -34,7 +34,6 @@
 #include "../prefs/PrefsDialog.h"
 #include "../theme/AllThemeResources.h"
 #include "../widgets/AudacityMessageBox.h"
-#include "../widgets/HelpSystem.h"
 
 // private helper classes and functions
 namespace {
@@ -293,18 +292,12 @@ void OnQuickFix(const CommandContext &context)
 
 void OnQuickHelp(const CommandContext &context)
 {
-   auto &project = context.project;
-   HelpSystem::ShowHelp(
-      &GetProjectFrame( project ),
-      L"Quick_Help");
+   OpenInDefaultBrowser(L"https://tenacityaudio.org/#community-buttons");
 }
 
 void OnManual(const CommandContext &context)
 {
-   auto &project = context.project;
-   HelpSystem::ShowHelp(
-      &GetProjectFrame( project ),
-      L"Main_Page");
+   OpenInDefaultBrowser(L"https://tenacityaudio.org/docs");
 }
 
 void OnAudioDeviceInfo(const CommandContext &context)

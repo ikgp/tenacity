@@ -49,7 +49,6 @@
 #include "shuttle/ShuttleGui.h"
 #include "widgets/Grid.h"
 #include "widgets/AudacityMessageBox.h"
-#include "widgets/HelpSystem.h"
 
 // Tenacity libraries
 #include <lib-files/FileNames.h>
