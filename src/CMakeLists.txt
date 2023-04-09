@@ -933,8 +933,6 @@ list( APPEND SOURCES
       widgets/Grabber.h
       widgets/Grid.cpp
       widgets/Grid.h
-      widgets/HelpSystem.cpp
-      widgets/HelpSystem.h
       widgets/HtmlWindow.cpp
       widgets/HtmlWindow.h
       widgets/ImageRoll.cpp
