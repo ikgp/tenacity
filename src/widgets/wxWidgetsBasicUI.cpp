@@ -18,6 +18,7 @@ Paul Licameli
 #include <wx/app.h>
 #include <wx/progdlg.h>
 #include <wx/windowptr.h>
+#include <wx/utils.h>
 
 using namespace GenericUI;
 
@@ -224,4 +225,9 @@ wxWidgetsBasicUI::DoMakeGenericProgress(
 {
    return std::make_unique<MyGenericProgress>(
       title, message, GetParent(placement));
+}
+
+void wxWidgetsUrlServices::DoOpenUrl(const std::string url)
+{
+   wxLaunchDefaultBrowser(url);
 }

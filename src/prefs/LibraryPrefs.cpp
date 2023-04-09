@@ -29,6 +29,8 @@ Audacity as well.
 #include "../widgets/ReadOnlyText.h"
 #include "../widgets/wxTextCtrlWrapper.h"
 
+// Tenacity libraries
+#include <lib-basic-ui/OpenUrl.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -172,7 +174,7 @@ void LibraryPrefs::OnFFmpegFindButton(wxCommandEvent & WXUNUSED(event))
 
 void LibraryPrefs::OnFFmpegDownButton(wxCommandEvent & WXUNUSED(event))
 {
-   OpenInDefaultBrowser(L"https://codeberg.org/tenacityteam/tenacity/releases");
+   GenericUI::OpenUrl("https://codeberg.org/tenacityteam/tenacity/releases");
 }
 
 bool LibraryPrefs::Commit()

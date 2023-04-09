@@ -8,6 +8,7 @@
 
 // Tenacity libraries
 #include <lib-audio-devices/AudioIOBase.h>
+#include <lib-basic-ui/OpenUrl.h>
 #include <lib-files/FileNames.h>
 #include <lib-preferences/Prefs.h>
 #include <lib-project/Project.h>
@@ -292,12 +293,12 @@ void OnQuickFix(const CommandContext &context)
 
 void OnQuickHelp(const CommandContext &context)
 {
-   OpenInDefaultBrowser(L"https://tenacityaudio.org/#community-buttons");
+   GenericUI::OpenUrl("https://tenacityaudio.org/#community-buttons");
 }
 
 void OnManual(const CommandContext &context)
 {
-   OpenInDefaultBrowser(L"https://tenacityaudio.org/docs");
+   GenericUI::OpenUrl("https://tenacityaudio.org/docs");
 }
 
 void OnAudioDeviceInfo(const CommandContext &context)

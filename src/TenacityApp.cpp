@@ -818,7 +818,10 @@ bool TenacityApp::OnInit()
    // Inject basic GUI services behind the facade
    {
       static wxWidgetsBasicUI uiServices;
+      static wxWidgetsUrlServices urlServices;
+
       (void)GenericUI::Install(&uiServices);
+      GenericUI::InstallUrlServices(&urlServices);
 
       GenericUI::SetAssertFn([](bool condition){
          wxASSERT(condition);

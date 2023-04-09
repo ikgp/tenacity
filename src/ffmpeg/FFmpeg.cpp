@@ -21,6 +21,7 @@ License: GPL v2.  See License.txt.
 #include "FFmpeg.h"
 
 // Tenacity libraries
+#include <lib-basic-ui/OpenUrl.h>
 #include <lib-files/FileNames.h>
 
 #include "SelectFile.h"
@@ -251,7 +252,7 @@ public:
 
    void OnDownload(wxCommandEvent & WXUNUSED(event))
    {
-      OpenInDefaultBrowser(L"https://codeberg.org/tenacityteam/tenacity/releases");
+      GenericUI::OpenUrl("https://codeberg.org/tenacityteam/tenacity/releases");
    }
 
    void UpdatePath()

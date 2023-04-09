@@ -18,6 +18,8 @@ set( SOURCES
    BasicUI.h
    GenericUIAssert.cpp
    GenericUIAssert.h
+   OpenUrl.cpp
+   OpenUrl.h
 )
 set( LIBRARIES
    lib-strings-interface

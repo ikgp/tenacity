@@ -13,6 +13,9 @@ Paul Licameli
 
 // Tenacity libraries
 #include <lib-basic-ui/BasicUI.h>
+#include <lib-basic-ui/OpenUrl.h>
+
+#include <string>
 
 class wxWindow;
 
@@ -54,6 +57,12 @@ protected:
    DoMakeGenericProgress(const GenericUI::WindowPlacement &placement,
       const TranslatableString &title,
       const TranslatableString &message) override;
+};
+
+class wxWidgetsUrlServices final : public GenericUI::UrlServices
+{
+   public:
+      void DoOpenUrl(const std::string url) override;
 };
 
 #endif
