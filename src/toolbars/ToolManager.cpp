@@ -535,8 +535,8 @@ static struct DefaultConfigEntry {
    { TimeBarID,              TransportBarID,         NoBarID                },
    { ToolsBarID,             TimeBarID,              NoBarID                },
    { RecordMeterBarID,       ToolsBarID,             NoBarID                },
-   { PlayMeterBarID,         RecordMeterBarID,       NoBarID                },
-   { EditBarID,              PlayMeterBarID,         NoBarID                },
+   { PlayMeterBarID,         ToolsBarID,             RecordMeterBarID       },
+   { EditBarID,              NoBarID,                TransportBarID         },
 
 // DA: Transcription Toolbar not docked, by default.
 #ifdef EXPERIMENTAL_DA
