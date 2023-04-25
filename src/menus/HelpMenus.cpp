@@ -298,7 +298,7 @@ void OnQuickHelp(const CommandContext &context)
 
 void OnManual(const CommandContext &context)
 {
-   GenericUI::OpenUrl("https://tenacityaudio.org/docs");
+   GenericUI::OpenUrl("https://tenacityaudio.org/docs/index.html");
 }
 
 void OnAudioDeviceInfo(const CommandContext &context)
