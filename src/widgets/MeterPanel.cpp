@@ -335,7 +335,7 @@ MeterPanel::MeterPanel(TenacityProject *project,
 
    // Do this BEFORE UpdatePrefs()!
    mRuler.SetFonts(GetFont(), GetFont(), GetFont());
-   mRuler.SetFlip(mStyle != MixerTrackCluster);
+   mRuler.SetFlip(mStyle != MixerChannel);
    mRuler.SetLabelEdges(true);
    //mRuler.SetTickColour( wxColour( 0,0,255 ) );
 
@@ -382,8 +382,8 @@ MeterPanel::MeterPanel(TenacityProject *project,
    // We have the tip instead.
    mDisabledBkgndBrush = mBkgndBrush;
    
-   // MixerTrackCluster style has no menu, so disallows SetStyle, so never needs icon.
-   if (mStyle != MixerTrackCluster)
+   // MixerChannel style has no menu, so disallows SetStyle, so never needs icon.
+   if (mStyle != MixerChannel)
    {
       if(mIsInput)
       {
@@ -421,7 +421,7 @@ void MeterPanel::UpdatePrefs()
    mDB = gPrefs->Read(Key(wxT("Type")), wxT("dB")) == wxT("dB");
    mMeterDisabled = gPrefs->Read(Key(wxT("Disabled")), (long)0);
 
-   if (mDesiredStyle != MixerTrackCluster)
+   if (mDesiredStyle != MixerChannel)
    {
       wxString style = gPrefs->Read(Key(wxT("Style")));
       if (style == wxT("AutomaticStereo"))
@@ -484,7 +484,7 @@ void MeterPanel::OnPaint(wxPaintEvent & WXUNUSED(event))
    wxColour clrText = theTheme.Colour( clrTrackPanelText );
    wxColour clrBoxFill = theTheme.Colour( clrMedium );
 
-   if (mLayoutValid == false || (mStyle == MixerTrackCluster ))
+   if (mLayoutValid == false || (mStyle == MixerChannel ))
    {
       // Create a NEW one using current size and select into the DC
       mBitmap = std::make_unique<wxBitmap>();
@@ -511,8 +511,8 @@ void MeterPanel::OnPaint(wxPaintEvent & WXUNUSED(event))
       dc.DrawRectangle(0, 0, mWidth, mHeight);
 //#endif
 
-      // MixerTrackCluster style has no icon or L/R labels
-      if (mStyle != MixerTrackCluster)
+      // MixerChannel style has no icon or L/R labels
+      if (mStyle != MixerChannel)
       {
          bool highlight = InIcon();
          dc.DrawBitmap( theTheme.Bitmap( highlight ? 
@@ -770,7 +770,7 @@ void MeterPanel::OnMouse(wxMouseEvent &evt)
       Refresh();
    }
 
-   if (mStyle == MixerTrackCluster) // MixerTrackCluster style has no menu.
+   if (mStyle == MixerChannel) // MixerChannel style has no menu.
       return;
 
   #if wxUSE_TOOLTIPS // Not available in wxX11
@@ -830,7 +830,7 @@ void MeterPanel::OnContext(wxContextMenuEvent &evt)
 #if defined(__WXMSW__)
    if (mHadKeyDown)
 #endif
-   if (mStyle != MixerTrackCluster) // MixerTrackCluster style has no menu.
+   if (mStyle != MixerChannel) // MixerChannel style has no menu.
    {
       ShowMenu(wxPoint(mIconRect.x + 1, mIconRect.y + mIconRect.height + 1));
    }
@@ -890,7 +890,7 @@ void MeterPanel::OnKeyUp(wxKeyEvent &evt)
 #if defined(__WXMSW__)
       if (mHadKeyDown)
 #endif
-      if (mStyle != MixerTrackCluster) // MixerTrackCluster style has no menu.
+      if (mStyle != MixerChannel) // MixerChannel style has no menu.
       {
          ShowMenu(wxPoint(mIconRect.x + 1, mIconRect.y + mIconRect.height + 1));
       }
@@ -1024,7 +1024,7 @@ void MeterPanel::UpdateDisplay(unsigned numChannels, int numFrames, float *sampl
    mQueue.Put(msg);
 }
 
-// Vaughan, 2010-11-29: This not currently used. See comments in MixerTrackCluster::UpdateMeter().
+// Vaughan, 2010-11-29: This not currently used. See comments in MixerChannel::UpdateMeter().
 //void MeterPanel::UpdateDisplay(int numChannels, int numFrames,
 //                           // Need to make these double-indexed arrays if we handle more than 2 channels.
 //                           float* maxLeft, float* rmsLeft,
@@ -1293,8 +1293,8 @@ void MeterPanel::HandleLayout(wxDC &dc)
    int lside;
    int rside;
 
-   // MixerTrackCluster has no L/R labels or icon
-   if (mStyle != MixerTrackCluster)
+   // MixerChannel has no L/R labels or icon
+   if (mStyle != MixerChannel)
    {
       if (mDesiredStyle == AutomaticStereo)
       {
@@ -1329,7 +1329,7 @@ void MeterPanel::HandleLayout(wxDC &dc)
    default:
       wxPrintf(wxT("Style not handled yet!\n"));
       break;
-   case MixerTrackCluster:
+   case MixerChannel:
       // width is now the entire width of the meter canvas
       width -= mRulerWidth + left;
 
@@ -2090,7 +2090,7 @@ void MeterPanel::OnPreferences(wxCommandEvent & WXUNUSED(event))
 
 wxString MeterPanel::Key(const wxString & key) const
 {
-   if (mStyle == MixerTrackCluster)
+   if (mStyle == MixerChannel)
    {
       return wxT("/Meter/Mixerboard/") + key;
    }
