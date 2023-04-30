@@ -228,6 +228,7 @@ private:
    // Track clusters are maintained in the same order as the WaveTracks.
    std::vector<MixerChannel*> mMixerChannels;
 
+   wxButton*                  mAddChannelButton;
    TenacityProject*           mProject;
    MixerBoardScrolledWindow*  mScrolledWindow; // Holds the MixerChannels and handles scrolling.
    double                     mPrevT1;

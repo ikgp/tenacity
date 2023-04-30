@@ -22,6 +22,7 @@
 #include <wx/dcclient.h>
 #include <wx/icon.h>
 #include <wx/settings.h> // for wxSystemSettings::GetColour and wxSystemSettings::GetMetric
+#include <wx/sizer.h>
 
 #include "AColor.h"
 #include "theme/AllThemeResources.h"
@@ -832,6 +833,8 @@ MixerBoard::MixerBoard(TenacityProject* pProject,
          size, // const wxSize& size = wxDefaultSize,
          wxHSCROLL); // long style = wxHSCROLL | wxVSCROLL, const wxString& name = "scrolledWindow")
 
+   mAddChannelButton = new wxButton(this, wxID_ANY, XO("Add Channel...").Translation());
+
    // Set background color to same as TrackPanel background.
 //   #ifdef EXPERIMENTAL_THEMING
 //      mScrolledWindow->SetBackgroundColour(this->GetParent()->GetBackgroundColour());
@@ -844,14 +847,12 @@ MixerBoard::MixerBoard(TenacityProject* pProject,
    mScrolledWindow->SetScrollRate(10, 0); // no vertical scroll
    mScrolledWindow->SetVirtualSize(size);
 
-   /* This doesn't work to make the mScrolledWindow automatically resize, so do it explicitly in OnSize.
-         auto pBoxSizer = std::make_unique<wxBoxSizer>(wxVERTICAL);
-         pBoxSizer->push_back(mScrolledWindow, 0, wxExpand, 0);
-         this->SetAutoLayout(true);
-         this->SetSizer(pBoxSizer);
-         pBoxSizer->Fit(this);
-         pBoxSizer->SetSizeHints(this);
-      */
+     auto sizer = std::make_unique<wxBoxSizer>(wxVERTICAL);
+     sizer->Add(mAddChannelButton, 0, wxEXPAND);
+     sizer->Add(mScrolledWindow, 0, wxEXPAND);
+     SetSizer(sizer.get());
+     Layout();
+     Fit();
 
    mPrevT1 = 0.0;
    mTracks = &TrackList::Get( *mProject );
