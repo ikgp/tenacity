@@ -28,10 +28,6 @@
 #include "theme/AllThemeResources.h"
 #include "AudioIO.h"
 
-#ifdef USE_MIDI
-#include "NoteTrack.h"
-#endif
-
 #include "CommonCommandFlags.h"
 #include "KeyboardCapture.h"
 #include "prefs/GUISettings.h" // for RTL_WORKAROUND
@@ -143,9 +139,6 @@ const int kMixerChannelWidth = kLeftSideStackWidth + kRightSideStackWidth + kQua
 enum {
    ID_SLIDER_PAN,
    ID_SLIDER_GAIN,
-#ifdef EXPERIMENTAL_MIDI_OUT
-   ID_SLIDER_VELOCITY,
-#endif
    ID_TOGGLEBUTTON_MUTE,
    ID_TOGGLEBUTTON_SOLO,
 };
@@ -156,9 +149,7 @@ BEGIN_EVENT_TABLE(MixerChannel, wxPanelWrapper)
 
    EVT_SLIDER(ID_SLIDER_PAN, MixerChannel::OnSlider_Pan)
    EVT_SLIDER(ID_SLIDER_GAIN, MixerChannel::OnSlider_Gain)
-#ifdef EXPERIMENTAL_MIDI_OUT
-   EVT_SLIDER(ID_SLIDER_VELOCITY, MixerChannel::OnSlider_Velocity)
-#endif
+
    //v EVT_COMMAND_SCROLL(ID_SLIDER_GAIN, MixerChannel::OnSliderScroll_Gain)
    EVT_COMMAND(ID_TOGGLEBUTTON_MUTE, wxEVT_COMMAND_BUTTON_CLICKED, MixerChannel::OnButton_Mute)
    EVT_COMMAND(ID_TOGGLEBUTTON_SOLO, wxEVT_COMMAND_BUTTON_CLICKED, MixerChannel::OnButton_Solo)
@@ -215,19 +206,6 @@ MixerChannel::MixerChannel(wxWindow* parent,
                .Style( DB_SLIDER )
                .Orientation( wxVERTICAL ));
    mSlider_Gain->SetName(_("Gain"));
-
-#ifdef EXPERIMENTAL_MIDI_OUT
-   mSlider_Velocity =
-      safenew MixerTrackSlider(
-            this, ID_SLIDER_VELOCITY,
-            /* i18n-hint: title of the MIDI Velocity slider */
-            XO("Velocity"),
-            ctrlPos, ctrlSize,
-            ASlider::Options{}
-               .Style( VEL_SLIDER )
-               .Orientation( wxVERTICAL ));
-   mSlider_Velocity->SetName(_("Velocity"));
-#endif
 
    // other controls and meter at right
    ctrlPos.x += kLeftSideStackWidth + kInset; // + kInset to center it in right side stack
@@ -329,13 +307,6 @@ WaveTrack *MixerChannel::GetRight() const
    return nullptr;
 }
 
-#ifdef EXPERIMENTAL_MIDI_OUT
-NoteTrack *MixerChannel::GetNote() const
-{
-   return dynamic_cast< NoteTrack * >( mTrack.get() );
-}
-#endif
-
 // Old approach modified things in situ.
 // However with a theme change there is so much to modify, it is easier
 // to recreate.
@@ -366,9 +337,6 @@ void MixerChannel::HandleResize() // For wxSizeEvents, update gain slider and me
          TRACK_NAME_HEIGHT + kDoubleInset) - // mStaticText_TrackName + margin
       kQuadrupleInset; // margin below gain slider
    mSlider_Gain->SetSize(-1, nGainSliderHeight);
-#ifdef EXPERIMENTAL_MIDI_OUT
-   mSlider_Velocity->SetSize(-1, nGainSliderHeight);
-#endif
 
    bool bSoloNone = ProjectSettings::Get( *mProject ).IsSoloNone();
 
@@ -400,22 +368,6 @@ void MixerChannel::HandleSliderGain(const bool bWantPushState /*= false*/)
       ProjectHistory::Get( *mProject )
          .PushState(XO("Moved gain slider"), XO("Gain"), UndoPush::CONSOLIDATE );
 }
-
-#ifdef EXPERIMENTAL_MIDI_OUT
-void MixerChannel::HandleSliderVelocity(const bool bWantPushState /*= false*/)
-{
-   float fValue = mSlider_Velocity->Get();
-   if (GetNote())
-      GetNote()->SetVelocity(fValue);
-
-   // Update the TrackPanel correspondingly.
-   TrackPanel::Get( *mProject ).RefreshTrack(mTrack.get());
-   if (bWantPushState)
-      ProjectHistory::Get( *mProject )
-         .PushState(XO("Moved velocity slider"), XO("Velocity"),
-            UndoPush::CONSOLIDATE);
-}
-#endif
 
 void MixerChannel::HandleSliderPan(const bool bWantPushState /*= false*/)
 {
@@ -476,13 +428,6 @@ void MixerChannel::UpdateForStateChange()
       mSlider_Gain->Hide();
    else
       mSlider_Gain->Set(GetWave()->GetGain());
-
-#ifdef EXPERIMENTAL_MIDI_OUT
-   if (!GetNote())
-      mSlider_Velocity->Hide();
-   else
-      mSlider_Velocity->Set(GetNote()->GetVelocity());
-#endif
 }
 
 void MixerChannel::UpdateMeter(const double t0, const double t1)
@@ -693,13 +638,6 @@ void MixerChannel::OnSlider_Gain(wxCommandEvent& WXUNUSED(event))
 {
    this->HandleSliderGain();
 }
-
-#ifdef EXPERIMENTAL_MIDI_OUT
-void MixerChannel::OnSlider_Velocity(wxCommandEvent& WXUNUSED(event))
-{
-   this->HandleSliderVelocity();
-}
-#endif
 
 //v void MixerChannel::OnSliderScroll_Gain(wxScrollEvent& WXUNUSED(event))
 //{
@@ -920,11 +858,6 @@ void MixerBoard::UpdatePrefs()
 
 // Reassign mixer input strips (MixerChannels) to Track Clusters
 // both have the same order.
-// If EXPERIMENTAL_MIDI_OUT, then Note Tracks appear in the
-// mixer, and we must be able to convert and reuse a MixerChannel
-// from audio to midi or midi to audio. This task is handled by
-// UpdateForStateChange().
-//
 void MixerBoard::UpdateTrackClusters()
 {
    if (!mImageMuteUp)
