@@ -627,7 +627,7 @@ void ThemeBase::WriteImageDefs( )
 teThemeType ThemeBase::GetFallbackThemeType(){
 // Fallback must be an internally supported type,
 // to guarantee it is found.
-   return "dark";
+   return "light";
 }
 
 /// Reads an image cache including images, cursors and colours.
